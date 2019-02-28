@@ -85,14 +85,14 @@ kind: Service
 metadata:
   name: frontend
   labels:
-    app: audienceanalyser
+    app: grogndash
     tier: frontend
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: audienceanalyser
+    app: grogndash
     tier: frontend
 ---
 apiVersion: extensions/v1beta1
@@ -104,12 +104,12 @@ spec:
   template:
     metadata:
       labels:
-        app: audienceanalyser
+        app: grogndash
         tier: frontend
     spec:
       containers:
       - name: beebs
-        image: thebeebs/howareyou:0e5b0dc5d83a1f498600ba700728b6df1981dc60
+        image: thebeebs/grogndash:latest
         imagePullPolicy: Always
         resources:
           requests:
@@ -126,15 +126,14 @@ kind: Service
 metadata:
   name: api
   labels:
-    app: audienceanalyser
+    app: grogndashorder
     tier: api
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 3000
   selector:
-    app: audienceanalyser
+    app: grogndashorder
     tier: api
 ---
 apiVersion: extensions/v1beta1
@@ -142,16 +141,16 @@ kind: Deployment
 metadata:
   name: api
 spec:
-  replicas: 2
+  replicas: 5
   template:
     metadata:
       labels:
-        app: audienceanalyser
+        app: grogndashorder
         tier: api
     spec:
       containers:
       - name: beebs
-        image: thebeebs/audienceanalyserapi:52ac5915a411b633460091ec53cbd6675be8b97b
+        image: thebeebs/grogndashorder:latest
         imagePullPolicy: Always
         resources:
           requests:
